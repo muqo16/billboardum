@@ -1,0 +1,9 @@
+﻿# Deny all direct web access to database directory
+<Files "*">
+    Order Deny,Allow
+    Deny from all
+</Files>
+
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>

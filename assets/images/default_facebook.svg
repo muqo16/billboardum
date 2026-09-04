@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="fbBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1877f2" />
+      <stop offset="100%" stop-color="#0c5ac0" />
+    </linearGradient>
+  </defs>
+  <circle cx="60" cy="60" r="58" fill="url(#fbBg)" stroke="#ffffff" stroke-width="3"/>
+  <path fill="#ffffff" d="M73 63 L68 63 L68 90 L56 90 L56 63 L50 63 L50 53 L56 53 L56 46 C56 40 59.5 35 68 35 L75 35 L75 44 L69.5 44 C67 44 68 45.5 68 48 L68 53 L75 53 L73 63 Z"/>
+</svg>

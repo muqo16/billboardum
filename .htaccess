@@ -1,0 +1,36 @@
+﻿# ==============================================================================
+# BILLBOARDUM.COM - PRODUCTION SECURITY HTACCESS
+# ==============================================================================
+
+# 1. Disable Directory Browsing
+Options -Indexes
+
+# 2. Set Default 404 Error Document
+ErrorDocument 404 /404.php
+
+# 3. Block Hidden Files & Directories (.git, .env, .htaccess, etc.)
+<FilesMatch "^\.">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# 4. Block Sensitive File Extensions (Databases, Logs, Configs, Scripts, Backups)
+<FilesMatch "(?i)\.(db|sqlite|sqlite3|sql|log|env|ini|sh|bak|md|json|lock|yml|yaml|dist)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# 5. Protect Core Sensitive PHP Files from Direct Execution
+<FilesMatch "(?i)^(config|db)\.php$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# 6. Global Security Response Headers
+<IfModule mod_headers.c>
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>

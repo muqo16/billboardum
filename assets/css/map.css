@@ -1,0 +1,1078 @@
+/* Map Layout, Clean Single-Province Hover, and City Detail Components */
+.mapwrap {
+    max-width: 1050px;
+    width: 100%;
+    margin: 0 auto 20px;
+    padding: 0 16px;
+}
+
+.map-container {
+    position: relative;
+    background: #ffffff; /* Denizler Bembeyaz */
+    border-radius: 24px;
+    padding: 24px 20px 20px;
+    border: 1.5px solid var(--border);
+    box-shadow: 0 10px 32px rgba(225, 29, 104, 0.06);
+    overflow: hidden;
+}
+
+.map-tools {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    z-index: 50;
+    display: flex;
+    gap: 6px;
+}
+
+.map-tool-btn {
+    width: 36px;
+    height: 36px;
+    background: #fff;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--ink);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.05);
+    transition: all 0.2s ease;
+}
+
+.map-tool-btn:hover {
+    background: #eff6ff;
+    border-color: #2563eb;
+    color: #2563eb;
+    transform: translateY(-1px);
+}
+
+.map-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1007.478 / 446;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-origin: center center;
+    transition: transform 0.15s ease-out;
+}
+
+#svg-turkiye-haritasi {
+    width: 100%;
+    height: 100%;
+    display: block;
+    filter: drop-shadow(0 10px 24px rgba(15, 23, 42, 0.08));
+}
+
+/* ===================================================
+   ADQUICK CLEAN TECH HARİTA PALETİ (FERAH, AÇIK & MODERN)
+   =================================================== */
+#svg-turkiye-haritasi path,
+#turkiye path {
+    fill: #e2e8f0; /* Açık, ferah, göz yormayan modern tech slate-gümüş */
+    stroke: #ffffff;
+    stroke-width: 1.1px;
+    stroke-linejoin: round;
+    transition: fill 0.18s ease, stroke 0.18s ease, stroke-width 0.18s ease, filter 0.18s ease;
+}
+
+#turkiye g[data-plakakodu] {
+    cursor: pointer;
+}
+
+#turkiye g[data-plakakodu].has-owner path {
+    fill: #2563eb; /* Sahipli / Lider İller: AdQuick Canlı Kraliyet Mavisi */
+}
+
+/* Hover ONLY on the single hovered province */
+#turkiye g[data-plakakodu]:hover path {
+    fill: #dbeafe !important; /* Ferah Açık Mavi Vurgusu */
+    stroke: #2563eb !important; /* Net AdQuick Mavi Çerçeve */
+    stroke-width: 2px !important;
+    filter: drop-shadow(0 4px 14px rgba(37, 99, 235, 0.28));
+}
+
+/* Active / Selected Province */
+#turkiye g[data-plakakodu].selected path {
+    fill: #eff6ff !important;
+    stroke: #1d4ed8 !important;
+    stroke-width: 2.2px !important;
+}
+
+/* ===================================================
+   TAM EKRAN HARİTA BÜYÜTME (FULLSCREEN MAP MODE)
+   =================================================== */
+.map-container.map-fullscreen-active {
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    z-index: 999999 !important;
+    background: #ffffff !important; /* Denizler Bembeyaz */
+    border-radius: 0 !important;
+    border: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 24px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+}
+
+.map-container.map-fullscreen-active .map-tools {
+    position: fixed !important;
+    top: 20px !important;
+    right: 24px !important;
+    z-index: 1000001 !important;
+}
+
+.map-container.map-fullscreen-active .map-stage {
+    width: min(94vw, calc(82vh * 2.2589)) !important;
+    max-width: 1600px !important;
+    height: auto !important;
+    aspect-ratio: 1007.478 / 446 !important;
+    margin: auto !important;
+    cursor: grab;
+}
+
+.map-container.map-fullscreen-active .map-stage:active {
+    cursor: grabbing;
+}
+
+.map-container.map-fullscreen-active #svg-turkiye-haritasi {
+    width: 100% !important;
+    height: 100% !important;
+    max-height: none !important;
+    max-width: none !important;
+    filter: drop-shadow(0 8px 30px rgba(15, 23, 42, 0.08));
+}
+
+/* Floating bottom bar in fullscreen */
+.map-fullscreen-bottom-bar {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1.5px solid var(--border);
+    padding: 10px 20px;
+    border-radius: 999px;
+    box-shadow: 0 8px 32px rgba(15, 23, 42, 0.12);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    z-index: 1000001;
+    white-space: nowrap;
+}
+
+.btn-fs-exit {
+    background: var(--brand-gradient);
+    color: #fff;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-fs-exit:hover {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+}
+
+/* Floating Avatar Pins Layer */
+.map-avatar-pins-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 25;
+}
+
+.city-avatar-pin {
+    position: absolute;
+    pointer-events: auto;
+    cursor: pointer;
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 0.26s cubic-bezier(0.34, 1.56, 0.64, 1), z-index 0.15s ease;
+    z-index: 30;
+}
+
+/* Hover or province hover makes the company pin GROW dynamically */
+.city-avatar-pin:hover,
+.city-avatar-pin.pop-active {
+    transform: translate(-50%, -72%) scale(1.68) !important;
+    z-index: 9999 !important;
+}
+
+.pin-bubble {
+    position: relative;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2px solid #2b2720;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.22s ease;
+}
+
+.city-avatar-pin:hover .pin-bubble,
+.city-avatar-pin.pop-active .pin-bubble {
+    border-color: #f59e0b;
+    border-width: 2.5px;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35), 0 0 0 4px rgba(245, 158, 11, 0.45);
+    background: #fffdfa;
+}
+
+.pin-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.pin-badge {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 15px;
+    height: 15px;
+    background: #2b2720;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8.5px;
+    border: 1.5px solid #fff;
+    transition: all 0.2s ease;
+}
+
+.city-avatar-pin:hover .pin-badge,
+.city-avatar-pin.pop-active .pin-badge {
+    background: #f59e0b;
+    color: #1a1a1a;
+    transform: scale(1.15);
+}
+
+/* Interactive Company Hover Popup Card ("popup gibi düşün") */
+.map-tooltip {
+    position: fixed;
+    z-index: 99999;
+    pointer-events: none;
+    background: transparent;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+    transform: translate(-50%, -108%);
+    display: none;
+    transition: opacity 0.12s ease;
+}
+
+.company-popup-card {
+    background: #ffffff;
+    border: 2px solid #2b2720;
+    border-radius: 14px;
+    padding: 12px 14px;
+    min-width: 250px;
+    max-width: 320px;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22), 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: relative;
+    animation: popupSpring 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes popupSpring {
+    0% {
+        opacity: 0;
+        transform: translateY(8px) scale(0.92);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.cpp-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+.cpp-logo-wrap {
+    position: relative;
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+}
+
+.cpp-logo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #2b2720;
+    background: #fdfbf7;
+}
+
+.cpp-logo-wrap.empty {
+    background: #f5eedf;
+    border: 2px dashed #8c826f;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.cpp-badge {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 17px;
+    height: 17px;
+    background: #2b2720;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    border: 1.5px solid #fff;
+}
+
+.cpp-meta {
+    flex: 1;
+    min-width: 0;
+}
+
+.cpp-title-line {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.cpp-brand {
+    font-size: 14.5px;
+    font-weight: 800;
+    color: #2b2720;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cpp-crown {
+    font-size: 13px;
+}
+
+.cpp-city-line {
+    font-size: 12px;
+    color: #6b6354;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 1px;
+}
+
+.cpp-dot {
+    color: #8c826f;
+}
+
+.cpp-empty-tag {
+    color: #b45309;
+    font-weight: 700;
+}
+
+.cpp-stats-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+    background: #faf7f0;
+    border: 1px solid #ebdcb9;
+    border-radius: 8px;
+    padding: 6px 10px;
+}
+
+.cpp-stat-pill {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+}
+
+.cpp-stat-pill .lbl {
+    color: #8c826f;
+}
+
+.cpp-stat-pill.price .val {
+    font-weight: 800;
+    color: #166534;
+}
+
+.cpp-stat-pill.clicks .val {
+    font-weight: 700;
+    color: #2b2720;
+}
+
+.cpp-empty-body {
+    background: #fdf6ec;
+    border: 1px solid #fde68a;
+    border-radius: 8px;
+    padding: 6px 10px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    color: #92400e;
+}
+
+.cpp-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 11px;
+    font-weight: 700;
+    color: #2d5a27;
+    border-top: 1px solid #ebdcb9;
+    padding-top: 6px;
+}
+
+.cpp-triangle {
+    position: absolute;
+    bottom: -9px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+    border-top: 9px solid #2b2720;
+}
+
+/* ===================================================
+   Bottom Leader Card (matching user screenshot)
+   =================================================== */
+.city-leader-bar-wrap {
+    max-width: 580px;
+    width: 100%;
+    margin: 14px auto 30px;
+    padding: 0 16px;
+}
+
+.city-leader-bar {
+    background: #fffdf8;
+    border: 1px solid #ebdcb9;
+    border-radius: 16px;
+    padding: 12px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.city-leader-bar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+    border-color: #cdbe9e;
+}
+
+.cl-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.cl-rank {
+    background: #fdfbf7;
+    border: 1px solid #ebdcb9;
+    color: #8c6d37;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 4px 8px;
+    border-radius: 8px;
+}
+
+.cl-avatar-wrap {
+    position: relative;
+    width: 42px;
+    height: 42px;
+}
+
+.cl-avatar {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid #2b2720;
+}
+
+.cl-badge {
+    position: absolute;
+    bottom: -2px;
+    right: -2px;
+    width: 16px;
+    height: 16px;
+    background: #2b2720;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    border: 1.5px solid #fff;
+}
+
+.cl-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.cl-brand-line {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.cl-brand-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.cl-info-ic {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    font-size: 10px;
+    color: var(--ink-muted);
+}
+
+.cl-where-line {
+    font-size: 12.5px;
+    color: var(--ink-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 1px;
+}
+
+.cl-crown {
+    color: #d97706;
+}
+
+.cl-right {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.cl-amount {
+    font-family: var(--font-serif);
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--ink);
+}
+
+.cl-clicks {
+    font-size: 12px;
+    color: var(--ink-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ===================================================
+   City Drawer & Alt İlanlar (Secondary Bids)
+   =================================================== */
+.drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(30, 27, 22, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+}
+
+.city-drawer-box {
+    background: #fff;
+    border-radius: 20px;
+    max-width: 480px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+    position: relative;
+    animation: drawer-pop 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes drawer-pop {
+    from { opacity: 0; transform: scale(0.95) translateY(12px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.drawer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.drawer-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.drawer-plate {
+    background: var(--ink);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    padding: 3px 9px;
+    border-radius: 6px;
+}
+
+.drawer-title {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.drawer-close {
+    background: none;
+    border: none;
+    font-size: 26px;
+    line-height: 1;
+    color: var(--ink-muted);
+    cursor: pointer;
+}
+
+/* Leader Section inside Drawer - GÖZ ALICI ALTIN PARLAMA & ŞAMPİYON KARTI */
+.drawer-bids-badge {
+    font-size: 11.5px;
+    font-weight: 800;
+    color: #166534;
+    background: #dcfce7;
+    border: 1px solid #bbf7d0;
+    padding: 2px 8px;
+    border-radius: 12px;
+    display: inline-block;
+    margin-top: 2px;
+}
+
+.drawer-leader-card {
+    background: #fdfbf7;
+    border: 1px solid #ebdcb9;
+    border-radius: 14px;
+    padding: 15px;
+    margin-bottom: 18px;
+}
+
+/* 1 NUMARA PARLATMA: ŞAMPİYON HALESİ & PARILTI */
+.champion-glowing {
+    position: relative;
+    background: linear-gradient(135deg, #fffdf2 0%, #fef9c3 55%, #fffbeb 100%) !important;
+    border: 2px solid #f59e0b !important;
+    border-radius: 14px;
+    padding: 16px;
+    margin-bottom: 18px;
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.4), 0 6px 18px rgba(217, 119, 6, 0.2);
+    animation: gold-pulse-shine 3s infinite ease-in-out;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.champion-glowing:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 32px rgba(245, 158, 11, 0.65), 0 10px 25px rgba(217, 119, 6, 0.35);
+}
+
+/* Light sweep across #1 */
+.champion-glowing::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -70%;
+    width: 45%;
+    height: 200%;
+    background: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.65) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(25deg);
+    animation: light-sweep 3.5s infinite ease-in-out;
+    pointer-events: none;
+}
+
+@keyframes light-sweep {
+    0% { left: -70%; }
+    35%, 100% { left: 140%; }
+}
+
+@keyframes gold-pulse-shine {
+    0%, 100% {
+        box-shadow: 0 0 16px rgba(245, 158, 11, 0.4), 0 4px 14px rgba(217, 119, 6, 0.15);
+        border-color: #f59e0b;
+    }
+    50% {
+        box-shadow: 0 0 32px rgba(245, 158, 11, 0.75), 0 8px 24px rgba(217, 119, 6, 0.35);
+        border-color: #d97706;
+    }
+}
+
+.dlc-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.champion-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: #ffffff !important;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(217, 119, 6, 0.45);
+    text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+}
+
+.sparkle-anim {
+    display: inline-block;
+    animation: sparkle-twinkle 1.5s infinite ease-in-out alternate;
+}
+
+@keyframes sparkle-twinkle {
+    0% { transform: scale(0.9) rotate(0deg); opacity: 0.8; }
+    100% { transform: scale(1.25) rotate(15deg); opacity: 1; }
+}
+
+.leader-status-live {
+    font-size: 11px;
+    font-weight: 700;
+    color: #15803d;
+    background: #dcfce7;
+    border: 1px solid #bbf7d0;
+    padding: 2px 8px;
+    border-radius: 12px;
+}
+
+.champion-avatar-wrap {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid #f59e0b;
+    box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+    background: #fff;
+}
+
+.champion-name {
+    font-weight: 800;
+    font-size: 16px;
+    color: #78350f;
+}
+
+.champion-amount {
+    font-family: var(--font-serif);
+    font-size: 21px;
+    font-weight: 900;
+    color: #15803d;
+    text-shadow: 0 1px 2px rgba(21, 128, 61, 0.15);
+}
+
+.champion-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 3px;
+    font-size: 12px;
+    color: #92400e;
+    font-weight: 600;
+}
+
+.dlc-tag {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #8c6d37;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.dlc-body {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Alt İlanlar List */
+.alt-ilanlar-section {
+    margin-bottom: 18px;
+}
+
+.alt-ilanlar-title {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.alt-count-pill {
+    font-size: 11px;
+    background: #ede6d6;
+    color: var(--ink);
+    padding: 2px 7px;
+    border-radius: 6px;
+    font-weight: 700;
+}
+
+.alt-ilanlar-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.alt-ilan-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #faf8f2;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+}
+
+.alt-ilan-row:hover {
+    transform: translateX(3px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+    background: #ffffff;
+    border-color: #cbd5e1;
+}
+
+.alt-ilan-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    flex: 1;
+}
+
+.alt-platform-tag {
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 4px;
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.alt-go-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: #1e293b;
+    color: #ffffff !important;
+    text-decoration: none;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 9px;
+    border-radius: 6px;
+    transition: background 0.15s ease, transform 0.15s ease;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+    white-space: nowrap;
+}
+
+.alt-go-btn:hover {
+    background: #0f172a;
+    transform: translateY(-1px);
+    color: #38bdf8 !important;
+}
+
+.alt-rank {
+    font-size: 11.5px;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    flex-shrink: 0;
+}
+
+.alt-rank.rank-2 {
+    background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
+    color: #334155;
+    border: 1px solid #94a3b8;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.alt-rank.rank-3 {
+    background: linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%);
+    color: #9a3412;
+    border: 1px solid #fdba74;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+
+.alt-rank.rank-default {
+    background: #f1f5f9;
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+}
+
+.alt-outbid-note {
+    font-size: 10px;
+    color: #b91c1c;
+    background: #fee2e2;
+    border: 1px solid #fecaca;
+    padding: 1px 6px;
+    border-radius: 4px;
+    margin-left: 4px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.alt-info-btn {
+    text-decoration: none;
+    font-size: 13px;
+    margin-left: 4px;
+    opacity: 0.8;
+    transition: opacity 0.15s ease;
+}
+
+.alt-info-btn:hover {
+    opacity: 1;
+}
+
+.alt-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.alt-name {
+    font-weight: 600;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.alt-amount {
+    font-weight: 800;
+    font-size: 14px;
+    color: #166534;
+    flex-shrink: 0;
+}
+
+.alt-empty {
+    background: #faf8f2;
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    padding: 14px;
+    text-align: center;
+    font-size: 12.5px;
+    color: var(--ink-muted);
+}
+
+/* Zirveyi Kap Büyük Butonu (Kullanıcı Ekranı Birebir) */
+.drawer-cta-wrap {
+    margin: 16px 0 20px 0;
+}
+
+.btn-zirveyi-kap {
+    width: 100%;
+    background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 14px 20px;
+    font-size: 16px;
+    font-weight: 800;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 14px rgba(27, 67, 50, 0.35);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.btn-zirveyi-kap:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(27, 67, 50, 0.45);
+    background: linear-gradient(135deg, #38805f 0%, #20503c 100%);
+}
+
+.btn-zirveyi-kap:active {
+    transform: translateY(0);
+}
+
+/* Outbid Form Section */
+.drawer-outbid-form-wrap {
+    background: #fbf7ec;
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 16px;
+}
+
+.dof-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--ink);
+}

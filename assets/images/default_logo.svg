@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2b2720" />
+      <stop offset="100%" stop-color="#14120e" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fef08a" />
+      <stop offset="50%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+  </defs>
+  <!-- Base Circle -->
+  <circle cx="60" cy="60" r="58" fill="url(#bgGrad)" stroke="#f59e0b" stroke-width="4"/>
+  
+  <!-- Subtle Inner Ring -->
+  <circle cx="60" cy="60" r="50" fill="none" stroke="rgba(254, 240, 138, 0.25)" stroke-width="1.5" stroke-dasharray="3,3"/>
+  
+  <!-- Crown on Top -->
+  <path d="M42 44 L48 52 L60 38 L72 52 L78 44 L76 58 L44 58 Z" fill="url(#goldGrad)" />
+  <circle cx="42" cy="42" r="2.5" fill="#fef08a"/>
+  <circle cx="60" cy="36" r="3" fill="#fef08a"/>
+  <circle cx="78" cy="42" r="2.5" fill="#fef08a"/>
+  
+  <!-- Billboard Screen Frame -->
+  <rect x="34" y="58" width="52" height="32" rx="4" fill="#ffffff" stroke="url(#goldGrad)" stroke-width="2.5" />
+  
+  <!-- Billboard Graphic Inside -->
+  <text x="60" y="79" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="16" fill="#1e293b" text-anchor="middle" letter-spacing="0.5">AD</text>
+  <circle cx="43" cy="74" r="2.5" fill="#f59e0b"/>
+  <circle cx="77" cy="74" r="2.5" fill="#f59e0b"/>
+  
+  <!-- Stand / Pole -->
+  <rect x="56" y="90" width="8" height="12" fill="url(#goldGrad)" rx="1"/>
+  <rect x="46" y="100" width="28" height="4" fill="url(#goldGrad)" rx="2"/>
+</svg>

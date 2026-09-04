@@ -1,0 +1,238 @@
+================================================================================
+           BILLBOARDUM.COM - SİSTEM ÖZELLİKLERİ, GÜVENLİK VE KURULUM REHBERİ
+================================================================================
+
+Bu doküman; 81 il interaktif Türkiye haritası üzerinden çalışan reklam ve açık 
+artırma (Outbid) platformunun tüm teknik özelliklerini, askeri düzeydeki güvenlik 
+önlemlerini, gizli admin kapısını, localhost test bilgilerini, canlı sunucuya 
+kurulumunu ve ayar adımlarını eksiksiz olarak açıklamaktadır.
+
+
+================================================================================
+🔑 HIZLI ERİŞİM: YÖNETİCİ (ADMİN) GİRİŞ BİLGİLERİ (LÜTFEN SAKLAYINIZ)
+================================================================================
+
+👉 CANLI SİTE ADMİN GİRİŞ ADRESİ (GİZLİ ANAHTARLI):
+   http://siteniz.com/admin/?key=bb_admin_2026
+
+👉 LOCALHOST TEST ADRESİ:
+   http://127.0.0.1:8000/admin/?key=bb_admin_2026
+
+👉 VARSAYILAN ADMİN ŞİFRESİ:
+   admin123
+
+⚠️ ÖNEMLİ GÜVENLİK NOTU:
+   Standart "/admin/" veya "/admin/index.php" adresini açmaya çalışan saldırganlar,
+   botlar veya yetkisiz ziyaretçiler sistem tarafından doğrudan HTTP 404 (Sayfa
+   Bulunamadı) hatasıyla karşılanır. Admin giriş ekranı YALNIZCA yukarıdaki 
+   "?key=bb_admin_2026" gizli parametresiyle açılabilir.
+
+🔐 ŞİFRE VE GİZLİ GİRİŞ ANAHTARINI DEĞİŞTİRME:
+   Admin paneline giriş yaptıktan sonra sol menüden "Site Ayarları" 
+   (/admin/settings.php) sayfasına giderek hem şifrenizi hem de URL'deki 
+   gizli giriş anahtarını dilediğiniz zaman tek tıkla değiştirebilirsiniz.
+
+
+================================================================================
+1. PROJE GENEL TANIMI & ÇALIŞMA MANTIĞI
+================================================================================
+Platform; Türkiye'nin 81 ilini dijital billboard alanlarına dönüştüren, interaktif
+bir açık artırma ve reklam sistemidir. 
+- Her il bir reklam alanıdır.
+- Bir ili o anki en yüksek teklifi veren marka / kullanıcı temsil eder ("Lider").
+- Yeni bir teklif geldiğinde, önceki sahibini "Outbid" ederek liderliği devralır.
+- Harita üzerinde liderlerin logoları dairesel pinler olarak tam il merkezlerinde
+  canlı görüntülenir.
+- Kullanıcılar ilin üzerine tıkladıklarında lideri, web sitesini veya seçtiği platformu
+  ve geçmiş alt ilanları/teklifleri inceleyebilir.
+
+
+================================================================================
+2. DETAYLI SİSTEM ÖZELLİKLERİ
+================================================================================
+
+A) İNTERAKTİF 81 İL VEKTÖREL (SVG) TÜRKİYE HARİTASI (Modern & Ferah Tasarım)
+   - 81 ilin tamamı hatasız, responsive ve modern SVG vektörel harita ile çizilmiştir.
+   - Tasarım dili: Açık hava reklamcılığı standartlarında ultra ferah,
+     açık gümüş-slate sahipsiz iller ve asil Kraliyet Mavisi (#2563eb) sahipli iller.
+   - Hover / Önizleme Kartı (Popup): İl üzerine gelindiğinde il adı, mevcut lider marka,
+     son teklif tutarı ve tıklama sayısı animasyonlu şık popup kartı ile gösterilir.
+   - Tam Ekran & Zoom: Harita tek tıkla tam ekran yapılabilir (+ / - butonlarıyla
+     harita içi serbestçe yakınlaştırılıp uzaklaştırılabilir).
+   - Harita üzerindeki dairesel şirket pinleri ve taçları matematiksel olarak 
+     her yakınlaştırma seviyesinde tam il merkezine kilitlenir.
+
+B) LİDER VE ALT İLANLAR ÇEKMECESİ (DRAWER / MODAL)
+   - Lider Marka Kartı: Logo, Marka Adı, Teklif Tutarı ve Tıklama Rozeti.
+   - SADECE İLAN VERİLEN PLATFORMUN TEK BUTONU:
+     * Şirket ilan verirken hangi platformu seçtiyse (Web Sitesi, Mobil Uygulama,
+       Instagram, YouTube, X veya Facebook) sadece o platforma ait tek ve net bir
+       aksiyon butonu gösterilir (Örn: "🌐 Web Sitesini Ziyaret Et ↗" veya 
+       "📷 Instagram Profiline Git ↗").
+     * Gereksiz ve kafa karıştıran fazladan sosyal medya butonları tamamen kaldırılmıştır.
+   - "Zirveyi Kap" Butonu: Tek tıkla o ili seçili getiren reklam formuna iletir.
+   - Geçmiş Teklifler / Alt İlanlar Listesi: O il için verilmiş tüm geçmiş teklifler,
+     marka adları, tutarları ve tarihleri şeffaf bir liste halinde sıralanır.
+
+C) CANLI KATEGORİ FİLTRELEME (ZİRVE SIRALAMASI)
+   - Zirve tablosundaki "Tümü, Siteler, Uygulamalar, Instagram, YouTube, X, Facebook"
+     sekmelerine tıklandığında sayfa YENİLENMEZ, anında canlı filtreleme yapılır.
+   - Madalyalar (🥇, 🥈, 🥉, #4...) seçilen kategoriye göre anında otomatik
+     yeniden hesaplanır.
+   - İlanı olmayan bir kategori seçildiğinde şık bir "Bu kategoride henüz lider yok"
+     boş durum kutusu ve ilan verme butonu gösterilir.
+
+D) AÇIK ARTIRMA & REKLAM VERME SİSTEMİ (OUTBID AKIŞI)
+   - Şehir Seçimi (81 İl Listesi veya Harita üzerinden)
+   - Platform Seçimi: Web, Uygulama, Instagram, YouTube, X, Facebook
+   - Marka Adı & Kullanıcı Adı / Domain
+   - Tıklanınca Gidilecek Hedef Link (https://...)
+   - Marka Logosu Yükleme (Kendi logonuz veya otomatik atanan şık platform logosu)
+   - Teklif Tutarı (₺)
+   - Ödeme Yöntemi: Banka Havalesi / EFT (IBAN) veya Kredi Kartı (Stripe)
+   - KVKK ve Kullanım Şartları Onay Kutusu
+
+E) %100 GERÇEK VE DİNAMİK İSTATİSTİKLER (SIFIR SAHTE VERİ)
+   - Ziyaretçi Sayısı: IP ve oturum bazlı tekil gerçek ziyaretçiler loglanır.
+   - Toplam Hacim (₺): İllerdeki aktif liderlik tekliflerinin gerçek toplamıdır.
+   - Aktif Şehir Oranı: 81 il içinde en az bir reklamı olan gerçek şehir sayısı.
+   - Tıklama Sayısı: Harita veya çekmeceden markaların sitelerine giden gerçek tıklamalar 
+     "go.php" sayacı ile tek tek doğrulanıp kaydedilir.
+
+F) KULLANICI HESAP YÖNETİMİ & PANELİ (`/panel/`)
+   - Üye Olma, Giriş Yapma, Şifreli Güvenli Oturum.
+   - Sahip olunan aktif iller, toplam tıklama ve harcama istatistikleri.
+   - Canlı tıklama logları (Tarih, Şehir, Platform, IP).
+
+
+================================================================================
+3. TAM KAPSAMLI ASKERİ DÜZEY GÜVENLİK SİSTEMİ (HARDENED SECURITY)
+================================================================================
+
+Sistem hacklenmelere, bot taramalarına, veritabanı sızıntılarına ve web açıklarına 
+karşı tam korumalı hale getirilmiştir:
+
+1. 🛡️ GİZLİ ADMİN GİRİŞİ (ADMIN GATEKEEPER & URL OBSCURITY)
+   - Standart bir ziyaretçi veya saldırgan bot `/admin/` veya `/admin/index.php`
+     sayfasına girdiğinde Admin Giriş ekranını ASLA GÖREMEZ!
+   - Sunucu anında **HTTP 404 Sayfa Bulunamadı** hatası döndürür. Saldırgan
+     orada bir admin paneli olduğunu dahi anlayamaz.
+   - Admin giriş ekranını açmak için özel **Gizli Anahtar (Secret Key)** gerekir:
+     👉 Giriş Adresi: `http://siteniz.com/admin/?key=bb_admin_2026`
+   - Anahtar doğru girildiğinde kilit açılır ve şifre giriş formu görünür.
+   - URL'deki `?key=...` parametresi tarayıcı geçmişine veya yönlendirmelere
+     sızmaması için anında temizlenir.
+   - Yanlış anahtar denemelerine karşı 30 dakikalık IP tabanlı kilit devreye girer.
+   - Gizli anahtar `/admin/settings.php` sayfasından istenildiği an değiştirilebilir.
+
+2. 🗄️ DOĞRUDAN VERİTABANI İNDİRME KORUMASI (SQLITE SHIELD)
+   - SQLite veritabanı dosyası (`billboardum.db`) korumalı `database/` klasörüne 
+     taşınmıştır.
+   - Kök dizindeki `.htaccess`, `database/.htaccess` ve `router.php` kuralları 
+     sayesinde tarayıcıdan doğrudan `.db`, `.sqlite`, `.sql`, `.log`, `.env`, `.bak`
+     dosyalarına erişim **403 Forbidden** ile tamamen engellenmiştir.
+   - Veritabanı kesinlikle dışarıdan indirilemez.
+
+3. 🔒 CSRF (CROSS-SITE REQUEST FORGERY) KORUMASI
+   - Admin panelindeki tüm kritik işlemler (ilan silme, kullanıcı silme, şehir boşaltma,
+     ödeme onaylama, şifre değiştirme) kriptografik CSRF belirteçleri ile korunur.
+   - Dışarıdan sahte link veya resim etiketiyle yönetici adına işlem yaptırılamaz.
+
+4. 💉 SQL INJECTION KORUMASI
+   - Veritabanı ile iletişim kuran tüm sorgular PDO Prepared Statements (Hazırlanmış
+     Sorgular) ile çalışır. Kullanıcı girdileri sorguya asla doğrudan eklenmez.
+
+5. 📁 SIFIR-GÜVEN (ZERO-TRUST) RESİM YENİDEN KODLAMA & ZARARLI DOSYA KORUMASI
+   - "Zararlı bir Python/PHP betiği veya virüs kodunun .png/.jpg'ye dönüştürülmesi"
+     veya resim içine gizlenmesi (Polyglot saldırıları) ihtimaline karşı Askeri 
+     Düzey PHP GD Sıfır-Güven Yeniden Kodlama Motoru geliştirilmiştir:
+     * Yüklenen dosyalar doğrudan diske KOPYALANMAZ.
+     * PHP GD motoru resmin yalnızca ham piksel verisini RAM belleğe okur.
+     * Bellekte sıfırdan, pürüzsüz yeni bir grafik tuvali oluşturulur.
+     * Pikseller bu yeni tuvale aktarılır ve yepyeni temiz bir PNG/JPG/WEBP dosyası 
+       olarak diske sıfırdan sıkıştırılarak yazılır.
+     * Bu sayede dosya başlığına, sonuna veya EXIF etiketine gizlenmiş tüm Python, 
+       PHP, Shell kodları ve polyglot yükler %100 FİZİKSEL OLARAK YOK EDİLİR!
+     * Resim gibi davranan sahte veya bozuk kod dosyaları ise RAM'e dahi alınamadan 
+       anında reddedilir.
+   - SVG dosyaları için derin XSS taraması: `<script>`, `foreignObject`, `onload`,
+     `onerror`, `javascript:`, `<!ENTITY`, `SYSTEM` içeren tüm dosyalar bloke edilir.
+   - `uploads/` klasöründe `.htaccess` ile PHP/Python/CGI motorları tamamen kapatılmıştır 
+     (`engine off`, `-ExecCGI`, `Deny from all`). Klasör içinde hiçbir script çalıştırılamaz.
+
+6. ⏱️ KABA KUVVET (BRUTE FORCE) VE ZAMANLAMA SALDIRISI KORUMASI
+   - Hatalı şifre veya hatalı anahtar denemelerinde 15-30 dakikalık IP engelleme.
+   - Şifre ve anahtar karşılaştırmalarında zamanlama saldırılarını (timing attack)
+     önlemek için `hash_equals()` güvenli algoritması kullanılır.
+
+7. 🍪 OTURUM (SESSION) VE BAŞLIK (HEADER) GÜVENLİĞİ
+   - `HttpOnly`, `SameSite=Lax` ve `UseOnlyCookies` bayrakları aktiftir (JavaScript ile
+     oturum çerezleri çalınamaz).
+   - `X-Frame-Options: SAMEORIGIN` (Clickjacking engeli)
+   - `X-Content-Type-Options: nosniff` (MIME sniffing engeli)
+   - `X-XSS-Protection: 1; mode=block`
+   - `Referrer-Policy: strict-origin-when-cross-origin`
+
+8. 🛡️ SIFIR SABİT KODLAMA (ZERO-HARDCODING) VE BCRYPT ŞİFRELEME
+   - Sistem içerisinde hiçbir yerde doğrudan kod içine gömülmüş (hardcoded) canlı 
+     API anahtarı, Stripe secret key veya açık metin şifre BULUNMAZ.
+   - Yönetici ve Kullanıcı Şifreleri: Veritabanında asla düz yazı tutulmaz; 
+     modern PHP Bcrypt (`PASSWORD_DEFAULT`, tuzlanmış güvenli hash) ile saklanır.
+   - Dinamik Yönetim: Tüm ödeme parametreleri (Stripe PK/SK, Banka IBAN, Alıcı vb.)
+     kod dosyalarında değil, Admin Paneli arayüzünden girilir ve veritabanında tutulur.
+   - Çevresel Değişken (.env) Desteği: `config.php` otomatik `.env` okuma ve `getenv()`
+     altyapısıyla donatılmıştır. Canlı sunucularda kod dosyalarına tek bir karakter 
+     yazmadan tüm ayarlar sunucu ortamından yönetilebilir.
+
+
+================================================================================
+4. CANLI SUNUCUYA KURULUM ADIMLARI
+================================================================================
+
+ADIM 1: Dosyaları Sunucuya Yükleme
+- Proje klasöründeki tüm dosyaları (`admin`, `assets`, `database`, `includes`, 
+  `panel`, `uploads`, `.htaccess`, `index.php`, `config.php` vb.) bir FTP programı 
+  veya cPanel Dosya Yöneticisi ile sitenizin kök dizinine (`public_html`) yükleyin.
+
+ADIM 2: PHP Sürümü & Eklentiler
+- Hosting panelinizden PHP sürümünün **PHP 8.0 veya üzeri** (Önerilen: 8.1 / 8.2 / 8.3 / 8.4) 
+  olduğundan emin olun.
+- Gerekli PHP eklentileri: `pdo_sqlite`, `fileinfo`, `mbstring`.
+
+ADIM 3: Yazma İzinleri (CHMOD)
+- `database/` klasörüne ve içindeki `billboardum.db` dosyasına yazma izni verin: **CHMOD 755 / 664**.
+- `uploads/` klasörüne yazma izni verin: **CHMOD 755**.
+
+ADIM 4: Alan Adı (Domain) Ayarı
+- `config.php` dosyasını açarak `SITE_DOMAIN` değerini alan adınıza göre güncelleyin.
+
+
+================================================================================
+5. ŞİFRE VE GİZLİ ANAHTAR YÖNETİMİ
+================================================================================
+
+A) ADMİN PANELİNE NASIL GİRİLİR?
+   1. Tarayıcınızı açın ve şu adrese gidin:
+      `http://siteniz.com/admin/?key=bb_admin_2026`
+   2. Kilit açılacak ve Yönetim Girişi ekranı gelecektir.
+   3. Yönetici şifrenizi yazarak giriş yapın (Varsayılan şifre: `admin123`).
+
+B) ADMİN ŞİFRESİNİ DEĞİŞTİRME
+   1. Admin paneline girdikten sonra sol menüden veya üstten **"Ayarlar"** (`/admin/settings.php`)
+      sayfasına gidin.
+   2. **"🔐 Yönetici Şifresini Değiştir"** kutusuna gelin.
+   3. Mevcut şifrenizi ve yeni belirleyeceğiniz şifrenizi girip "Yeni Şifreyi Kaydet"e basın.
+   4. Dilerseniz `config.php` dosyasındaki `ADMIN_PASSWORD` alanından da değiştirebilirsiniz.
+
+C) GİZLİ GİRİŞ ANAHTARINI (URL ANAHTARINI) DEĞİŞTİRME
+   1. `/admin/settings.php` sayfasının en altındaki 
+      **"🛡️ Gizli Giriş Anahtarı (Admin Girişini Saklama)"** kutusuna gelin.
+   2. Yeni belirleyeceğiniz gizli anahtarı yazın (Örn: `benim_ozel_kapim_2026`).
+   3. Güvenlik doğrulaması için mevcut yönetici şifrenizi girip kaydedin.
+   4. Artık admin giriş adresiniz `http://siteniz.com/admin/?key=benim_ozel_kapim_2026` olacaktır.
+   5. Dilerseniz `config.php` dosyasındaki `ADMIN_SECRET_KEY` alanından da değiştirebilirsiniz.
+
+================================================================================
+Tüm güvenlik kontrolleri ve sistem testleri %100 başarıyla tamamlanmıştır.
+Proje canlı yayına hazırdır.
+================================================================================

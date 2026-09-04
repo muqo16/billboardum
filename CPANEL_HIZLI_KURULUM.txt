@@ -1,0 +1,37 @@
+================================================================================
+          BILLBOARDUM.COM - CPANEL HIZLI KURULUM REHBERİ (3 ADIMDA CANLI)
+================================================================================
+
+1. ADIM: DOSYALARI YÜKLEME
+   - İster bu klasörün içindeki tüm dosyaları cPanel Dosya Yöneticisi ile 
+     'public_html' klasörünün içine yükleyin,
+   - İsterseniz Masaüstünüzdeki 'BILLBOARDUM_CPANEL_PAKETI.zip' dosyasını 
+     doğrudan 'public_html' içine yükleyip sağ tıklayarak 'Extract' (Çıkar) deyin.
+
+2. ADIM: PHP SÜRÜMÜ & EKLENTİ KONTROLÜ
+   - cPanel > 'Select PHP Version' (PHP Sürümü Seçimi) bölümünden PHP sürümünün 
+     PHP 8.0 veya üzeri (8.1 / 8.2 / 8.3 / 8.4) olduğundan emin olun.
+   - Şu eklentilerin tikli (aktif) olduğunu doğrulayın:
+     * pdo_sqlite
+     * fileinfo
+     * gd
+     * mbstring
+
+3. ADIM: YAZMA İZİNLERİ (CHMOD)
+   - 'database/' klasörüne ve içindeki 'billboardum.db' dosyasına yazma izni verin: 755 / 664.
+   - 'uploads/' klasörüne yazma izni verin: 755.
+
+================================================================================
+🔑 ADMİN PANELİNE GİRİŞ BİLGİLERİ (UNUTMAYINIZ):
+================================================================================
+
+👉 GİZLİ GİRİŞ LİNKİNİZ:
+   http://siteniz.com/admin/?key=bb_admin_2026
+
+👉 YÖNETİCİ ŞİFRENİZ:
+   admin123
+
+(Not: Giriş ekranı yabancılara ve botlara 404 Sayfa Bulunamadı hatası verir, 
+sadece yukarıdaki '?key=bb_admin_2026' linkiyle açılır.)
+
+Tebrikler! Siteniz canlı yayına hazırdır.

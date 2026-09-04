@@ -1,0 +1,20 @@
+# Development & Scratch
+scratch/
+*.log
+.DS_Store
+Thumbs.db
+node_modules/
+.env
+
+# Database files - Never push live SQLite databases or visitor logs
+database/*.db
+database/*.sqlite
+database/*.sqlite3
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploads - receipts and user uploads
+uploads/receipts/*
+!uploads/receipts/index.php
+
