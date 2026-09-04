@@ -28,11 +28,9 @@ $topLeader = !empty($leaderboard) ? $leaderboard[0] : null;
         </p>
 
         <!-- Seamless Quick Claim Box -->
-        <form action="/reklam-ver.php" method="GET" style="display: flex; max-width: 560px; width: 100%; margin: 0 auto; gap: 8px; background: #fff; padding: 6px; border-radius: 12px; border: 1.5px solid var(--border); box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);">
-            <input type="text" name="u" placeholder="Web siten, uygulaman veya sosyal medyan..." style="flex: 1; border: none; outline: none; padding: 0 14px; font-size: 14.5px; font-weight: 500; background: transparent; color: var(--ink);" autocomplete="off" />
-            <button type="submit" style="background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s ease; white-space: nowrap; box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);">
-                Şehrini Kap 🚀
-            </button>
+        <form action="/reklam-ver.php" method="GET" class="hero-quick-form">
+            <input type="text" name="u" placeholder="Web siten, uygulaman veya sosyal medyan..." autocomplete="off" />
+            <button type="submit">Şehrini Kap 🚀</button>
         </form>
     </section>
 

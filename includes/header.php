@@ -62,7 +62,8 @@ $currentUser = get_current_user_info();
                 <a href="/toplu.php" class="nav-link">Toplu Alım</a>
                 <a href="/reklam-ver.php" class="btn-cta">
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
-                    <span>Reklam Ver / Şehir Kap</span>
+                    <span class="btn-cta-full">Reklam Ver / Şehir Kap</span>
+                    <span class="btn-cta-short">Şehir Kap 🚀</span>
                 </a>
 
                 <?php if ($currentUser): ?>

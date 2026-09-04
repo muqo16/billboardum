@@ -123,6 +123,12 @@ header.top {
     font-weight: 700;
     transition: all 0.2s ease;
     box-shadow: var(--brand-glow);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.btn-cta .btn-cta-short {
+    display: none;
 }
 
 .btn-cta:hover {
@@ -230,6 +236,53 @@ header.top {
     color: var(--ink-muted);
     max-width: 580px;
     margin: 0 auto 22px;
+}
+
+.hero-quick-form {
+    display: flex;
+    max-width: 560px;
+    width: 100%;
+    margin: 0 auto;
+    gap: 8px;
+    background: #fff;
+    padding: 6px;
+    border-radius: 12px;
+    border: 1.5px solid var(--border);
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+    box-sizing: border-box;
+}
+
+.hero-quick-form input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    outline: none;
+    padding: 0 14px;
+    font-size: 14.5px;
+    font-weight: 500;
+    background: transparent;
+    color: var(--ink);
+}
+
+.hero-quick-form button {
+    background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+    color: #fff;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+    flex-shrink: 0;
+}
+
+.hero-quick-form button:hover {
+    background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.45);
 }
 
 .hero-actions {
@@ -1157,4 +1210,388 @@ footer.site-footer {
         display: none;
     }
 }
+
+/* ==========================================================================
+   Comprehensive Mobile & Tablet Responsive Engine (< 768px & < 640px)
+   ========================================================================== */
+
+/* 1. Global Viewport Overflow Fix */
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+    position: relative;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* 2. Tablet & Mobile Header (< 768px) */
+@media (max-width: 768px) {
+    header.top {
+        padding: 10px 16px;
+        margin-bottom: 16px;
+    }
+    .brand {
+        font-size: 19px;
+        gap: 8px;
+    }
+    .brand svg {
+        width: 22px;
+        height: 22px;
+    }
+    .top-nav {
+        gap: 8px;
+    }
+    .nav-link {
+        display: none;
+    }
+    .btn-cta {
+        padding: 7px 14px;
+        font-size: 12.5px;
+    }
+    .btn-cta .btn-cta-full {
+        display: none;
+    }
+    .btn-cta .btn-cta-short {
+        display: inline;
+    }
+}
+
+/* 3. Small Mobile Header & Pulse (< 640px) */
+@media (max-width: 640px) {
+    header.top {
+        padding: 8px 12px;
+        margin-bottom: 12px;
+    }
+    .brand {
+        font-size: 17px;
+        gap: 6px;
+    }
+    .brand svg {
+        width: 19px;
+        height: 19px;
+    }
+    .btn-cta {
+        padding: 6px 11px;
+        font-size: 12px;
+    }
+
+    /* Pulse Ticker Wrap */
+    .pulse-wrap {
+        padding: 0 10px;
+        margin-bottom: 16px;
+        width: 100%;
+    }
+    .pulse {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 4px 8px;
+        padding: 8px 12px;
+        font-size: 11.5px;
+        border-radius: 14px;
+        max-width: 100%;
+        text-align: center;
+        line-height: 1.4;
+    }
+    .pulse .sep {
+        opacity: 0.3;
+    }
+
+    /* Hero */
+    .hero-outbid {
+        padding: 0 12px;
+        margin-bottom: 18px;
+        max-width: 100%;
+    }
+    .hero-title {
+        font-size: clamp(22px, 6.5vw, 32px);
+        line-height: 1.18;
+        margin-bottom: 8px;
+        word-break: break-word;
+    }
+    .hero-sub {
+        font-size: 13.5px;
+        margin-bottom: 16px;
+    }
+
+    /* Hero Quick Form */
+    .hero-quick-form {
+        padding: 4px;
+        gap: 6px;
+    }
+    .hero-quick-form input {
+        padding: 0 8px;
+        font-size: 13px;
+    }
+    .hero-quick-form button {
+        padding: 10px 14px;
+        font-size: 12.5px;
+    }
+
+    /* Live Ticker Container */
+    .live-ticker-container {
+        padding: 0 10px;
+        margin: 4px auto 18px;
+        max-width: 100%;
+    }
+    .live-ticker-badge {
+        padding: 5px 8px;
+        font-size: 11px;
+    }
+    .ticker-chip {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+}
+
+/* 4. Leaderboard & Tabs (< 768px & < 640px) */
+@media (max-width: 768px) {
+    .leaderboard-section-wrap {
+        padding: 0 12px;
+        margin: 24px auto 20px;
+    }
+    .leaderboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .lh-left h2 {
+        font-size: 20px;
+    }
+    .lh-left p {
+        font-size: 12.5px;
+    }
+    .filter-tabs {
+        width: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        border-radius: 12px;
+        padding: 5px 6px;
+        box-sizing: border-box;
+    }
+    .filter-tabs::-webkit-scrollbar {
+        display: none;
+    }
+    .tab-btn {
+        flex-shrink: 0;
+        white-space: nowrap;
+        font-size: 12.5px;
+        padding: 6px 13px;
+    }
+}
+
+@media (max-width: 640px) {
+    .outbid-table-wrap {
+        border-radius: 14px;
+    }
+    .outbid-row {
+        display: grid;
+        grid-template-columns: 28px 40px 1fr;
+        grid-template-areas:
+            "rank avatar info"
+            "stats stats stats"
+            "action action action";
+        gap: 10px 8px;
+        padding: 12px 10px;
+    }
+    .col-rank {
+        grid-area: rank;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .trophy {
+        font-size: 18px;
+    }
+    .col-avatar {
+        grid-area: avatar;
+    }
+    .avatar-ring {
+        width: 38px;
+        height: 38px;
+    }
+    .col-info {
+        grid-area: info;
+        min-width: 0;
+    }
+    .brand-row {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+    }
+    .brand-name {
+        font-size: 14px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 160px;
+    }
+    .platform-tag {
+        font-size: 9.5px;
+        padding: 1px 5px;
+    }
+    .cities-tag-list {
+        margin-top: 2px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+    .city-count-pill {
+        font-size: 10.5px;
+        padding: 1px 6px;
+    }
+    .city-names-txt {
+        font-size: 11.5px;
+        max-width: 140px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .col-stats {
+        grid-area: stats;
+        display: flex;
+        justify-content: space-between;
+        background: #f8fafc;
+        border: 1px solid #edf2f7;
+        padding: 8px 12px;
+        border-radius: 8px;
+        gap: 0;
+    }
+    .stat-lbl {
+        font-size: 10px;
+    }
+    .stat-val.amount-val {
+        font-size: 14px;
+    }
+    .stat-val.clicks-val {
+        font-size: 13px;
+    }
+    .col-action {
+        grid-area: action;
+        display: flex;
+        width: 100%;
+        gap: 8px;
+    }
+    .btn-outlink {
+        flex: 0 0 40px;
+        height: 38px;
+        border-radius: 8px;
+    }
+    .btn-outbid-row {
+        flex: 1;
+        justify-content: center;
+        height: 38px;
+        font-size: 13px;
+        padding: 0 12px;
+    }
+}
+
+/* 5. Bottom Leader Bar on Mobile (< 640px) */
+@media (max-width: 640px) {
+    .city-leader-bar-wrap {
+        padding: 0 10px;
+        margin: 12px auto 16px;
+    }
+    .city-leader-bar {
+        padding: 10px 12px;
+        gap: 8px;
+        border-radius: 12px;
+    }
+    .cl-avatar-wrap {
+        width: 36px;
+        height: 36px;
+    }
+    .cl-brand-name {
+        font-size: 13.5px;
+        max-width: 125px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .cl-where-line {
+        font-size: 11px;
+    }
+    .cl-amount {
+        font-size: 15.5px;
+    }
+    .cl-clicks {
+        font-size: 11px;
+    }
+}
+
+/* 6. Map Tools & Zoom (< 640px) */
+@media (max-width: 640px) {
+    .mapwrap {
+        padding: 0 10px;
+    }
+    .map-container {
+        border-radius: 16px;
+        padding: 12px 6px 10px;
+    }
+    .map-tools {
+        top: 8px;
+        right: 8px;
+        gap: 4px;
+    }
+    .map-tool-btn {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+    }
+    .map-tool-btn svg {
+        width: 15px;
+        height: 15px;
+    }
+}
+
+/* 7. City Drawer Bottom Sheet (< 640px) */
+@media (max-width: 640px) {
+    .drawer-backdrop {
+        align-items: flex-end !important;
+        padding: 0 !important;
+    }
+    .city-drawer-box {
+        max-width: 100% !important;
+        border-radius: 20px 20px 0 0 !important;
+        padding: 18px 16px 28px !important;
+        max-height: 85vh !important;
+        box-shadow: 0 -10px 40px rgba(0,0,0,0.2) !important;
+        animation: drawer-mobile-slide 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    @keyframes drawer-mobile-slide {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+    }
+}
+
+/* 8. Reklam Ver & Panel Forms (< 640px) */
+@media (max-width: 640px) {
+    .reklam-wrap, .panel {
+        padding: 16px 12px !important;
+        border-radius: 12px !important;
+    }
+    .seg, .platform-seg-grid {
+        display: grid !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 6px !important;
+    }
+    .seg label {
+        padding: 8px 6px !important;
+        font-size: 12px !important;
+        text-align: center !important;
+    }
+    .btn-primary {
+        padding: 12px 16px !important;
+        font-size: 14px !important;
+    }
+}
+
 
